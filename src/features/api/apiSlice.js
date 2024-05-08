@@ -7,6 +7,7 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getTodos: builder.query({
       query: () => "/todos",
+      transformResponse: (res) => res.sort((a, b) => b.id - a.id),
       providesTags: ["Todos"],
     }),
     addTodo: builder.mutation({
@@ -23,6 +24,7 @@ export const apiSlice = createApi({
         method: "PATCH",
         body: todo,
       }),
+      invalidatesTags: ["Todos"],
     }),
     deleteTodo: builder.mutation({
       query: ({ id }) => ({
@@ -30,6 +32,7 @@ export const apiSlice = createApi({
         method: "DELETE",
         body: id,
       }),
+      invalidatesTags: ["Todos"],
     }),
   }),
 });
